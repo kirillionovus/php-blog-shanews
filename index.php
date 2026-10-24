@@ -239,9 +239,9 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php if (!empty($posts)): ?>
             <?php foreach ($posts as $post): ?>
                 <article class="bg-white border border-slate-200/80 p-6 shadow-2xs hover:border-slate-300 transition flex flex-row gap-6">
-                    <div class="w-90 h-60 shrink-0 rounded-xs overflow-hidden bg-slate-100 cursor-pointer">
+                    <a href="post.php?id=<?php echo $post['id']; ?>" class="w-90 h-60 shrink-0 rounded-xs overflow-hidden bg-slate-100 block group">
                         <img src="<?php echo htmlspecialchars($post['main_image']); ?>" alt="Post image" class="w-full h-full object-cover">
-                    </div>
+                    </a>
 
                     <div class="flex-1 flex flex-col justify-between ml-4">
                         <div>
