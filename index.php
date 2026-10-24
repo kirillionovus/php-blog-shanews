@@ -3,6 +3,18 @@ session_start();
 require_once('config/db.php');
 
 $current_category = isset($_GET['category']) ? $_GET['category'] : 'home';
+
+$sort = isset($_GET['sort']) && $_GET === 'oldest' ? 'ASC' : 'DESC';
+
+if($current_category === 'home'){
+    $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY created_at $sort");
+    $stmt->execute([]);
+}else{
+    $stmt = $pdo->prepare("SELECT * FROM posts WHERE category = ? ORDER BY created_at $sort");
+    $stmt->execute([$current_category]);
+}
+
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,49 +144,49 @@ $current_category = isset($_GET['category']) ? $_GET['category'] : 'home';
 <nav class="border-b border-slate-200 bg-white px-12">
     <div class="max-w-[1800px] mx-auto flex items-center justify-center">
         <div class="flex items-center gap-10 text-sm font-medium whitespace-nowrap">
-            <a href="index.php" class="relative py-4 <?php echo $current_category === 'home' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php" class="relative py-4 <?php echo $current_category === 'home' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Home
                 <?php if ($current_category === 'home'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=world" class="relative py-4 <?php echo $current_category === 'world' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=world" class="relative py-4 <?php echo $current_category === 'world' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 World
                 <?php if ($current_category === 'world'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=business" class="relative py-4 <?php echo $current_category === 'business' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=business" class="relative py-4 <?php echo $current_category === 'business' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Business
                 <?php if ($current_category === 'business'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=technology" class="relative py-4 <?php echo $current_category === 'technology' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=technology" class="relative py-4 <?php echo $current_category === 'technology' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Technology
                 <?php if ($current_category === 'technology'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=science" class="relative py-4 <?php echo $current_category === 'science' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=science" class="relative py-4 <?php echo $current_category === 'science' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Science
                 <?php if ($current_category === 'science'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=culture" class="relative py-4 <?php echo $current_category === 'culture' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=culture" class="relative py-4 <?php echo $current_category === 'culture' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Culture
                 <?php if ($current_category === 'culture'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
                 <?php endif; ?>
             </a>
 
-            <a href="index.php?category=sport" class="relative py-4 <?php echo $current_category === 'sport' ? 'text-blue-600 font-semibold' : 'text-slate-500 hover:text-slate-950'; ?> transition">
+            <a href="index.php?category=sport" class="relative py-4 <?php echo $current_category === 'sport' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-950'; ?> transition">
                 Sport
                 <?php if ($current_category === 'sport'): ?>
                     <span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-600 rounded-t-full"></span>
@@ -224,35 +236,44 @@ $current_category = isset($_GET['category']) ? $_GET['category'] : 'home';
     </div>
 
     <div class="space-y-6">
-        <article class="bg-white border border-slate-200/80 p-6 shadow-2xs hover:border-slate-300 transition flex flex-row gap-6">
-            <div class="w-90 h-60 shrink-0 rounded-xs overflow-hidden bg-slate-100">
-                <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800" alt="Train station" class="w-full h-full object-cover">
-            </div>
-
-            <div class="flex-1 flex flex-col justify-between ml-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-3 mt-8">
-                        <span class="text-sm font-bold uppercase tracking-wider text-blue-600 py-0.5">
-                            World
-                        </span>
+        <?php if (!empty($posts)): ?>
+            <?php foreach ($posts as $post): ?>
+                <article class="bg-white border border-slate-200/80 p-6 shadow-2xs hover:border-slate-300 transition flex flex-row gap-6">
+                    <div class="w-90 h-60 shrink-0 rounded-xs overflow-hidden bg-slate-100 cursor-pointer">
+                        <img src="<?php echo htmlspecialchars($post['main_image']); ?>" alt="Post image" class="w-full h-full object-cover">
                     </div>
 
-                    <h3 class="text-4xl font-bold text-slate-950 hover:text-blue-600 transition leading-snug mb-2">
-                        <a href="#">Europe’s night trains are making a comeback</a>
-                    </h3>
+                    <div class="flex-1 flex flex-col justify-between ml-4">
+                        <div>
+                            <div class="flex items-center gap-2 mb-3 mt-8">
+                                <span class="text-sm font-bold uppercase tracking-wider text-blue-600 py-0.5">
+                                    <?php echo htmlspecialchars(ucfirst($post['category'])); ?>
+                                </span>
+                            </div>
 
-                    <p class="text-base text-slate-500 leading-relaxed line-clamp-2 mt-4">
-                        New sleeper routes are connecting the continent as travellers look for a slower, more sustainable way to get around.
-                    </p>
-                </div>
+                            <h3 class="text-4xl font-bold text-slate-950 hover:text-blue-700 transition leading-snug mb-2">
+                                <a href="post.php?id=<?php echo $post['id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a>
+                            </h3>
 
-                <div class="flex items-center gap-2 text-sm text-slate-400 pt-4 border-t border-slate-100 mb-4">
-                    <span class="font-semibold text-slate-800">Emma Clarke</span>
-                    <span>•</span>
-                    <span>24 min ago</span>
-                </div>
+                            <p class="text-base text-slate-500 leading-relaxed line-clamp-2 mt-4">
+                                <?php echo htmlspecialchars($post['brief']); ?>
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-sm text-slate-400 pt-4 border-t border-slate-100 mb-4">
+                            <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($post['author'] ?? 'Admin'); ?></span>
+                            <span>•</span>
+                            <span><?php echo date('M j, Y', strtotime($post['created_at'])); ?></span>
+                        </div>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="bg-white border border-slate-200/80 p-12 text-center rounded-xl">
+                <p class="text-lg font-medium text-slate-600">No stories found in this category yet.</p>
+                <p class="text-sm text-slate-400 mt-1">Check back later or add new posts via the admin panel.</p>
             </div>
-        </article>
+        <?php endif; ?>
     </div>
 </main>
 
