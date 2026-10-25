@@ -32,5 +32,6 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['remember_token'])) {
     if ($user) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
     }
 }

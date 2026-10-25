@@ -224,16 +224,26 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h2 class="text-base font-bold text-slate-950">Latest stories</h2>
         </div>
 
-        <div class="relative">
-            <select name="sort" class="appearance-none bg-transparent text-xs font-medium text-slate-500 hover:text-slate-950 focus:outline-none pr-5 py-1 cursor-pointer transition">
-                <option value="newest" selected>Newest first</option>
-                <option value="oldest">Oldest first</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-slate-400">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <select name="sort" class="appearance-none bg-transparent text-xs font-medium text-slate-500 hover:text-slate-950 focus:outline-none pr-5 py-1 cursor-pointer transition">
+                    <option value="newest" selected>Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+                </div>
             </div>
+
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                <a href="admin_add_post.php" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition flex items-center justify-center cursor-pointer shadow-sm" title="Create New Post">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 

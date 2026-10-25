@@ -32,7 +32,43 @@ $images_essay = $images_stmt->fetchAll(PDO::FETCH_ASSOC);
     <style type="text/tailwindcss">
     @theme {
         --color-clifford: #da373d;
-    }
+        }
+
+        article p{
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #334155;
+            margin-bottom: 1.5rem;
+        }
+        article h1, article h2, article h3{
+            font-family: 'Newsreader', serif;
+            font-weight: 700;
+            color: #020617;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        article h3{
+            font-size: 1.875rem;
+            line-height: 1.3;
+        }
+        article blockquote{
+            border-left: 3px solid #3b82f6;
+            padding-left: 1.5rem;
+            margin: 3rem 0;
+            font-family: 'Newsreader', serif;
+            font-size: 1.875rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #020617;
+            font-style: normal;
+        }
+        article ul, article ol{
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #334155;
+        }
+        article ul{ list-style-type: disc; }
+        article ol{ list-style-type: decimal; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col overflow-x-auto bg-slate-100 text-slate-950 selection:bg-blue-200">
@@ -228,13 +264,24 @@ $images_essay = $images_stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <?php foreach ($essay_images as $img): ?>
+                <?php foreach ($images_essay as $img): ?>
                     <div class="flex flex-col">
-                        <div class="h-80 rounded-xl overflow-hidden bg-slate-100 shadow-sm">
-                            <img src="<?php echo htmlspecialchars($img['image_path']); ?>" alt="Essay photo" class="w-full h-full object-cover">
+                        <div class="h-80 rounded-xl overflow-hidden bg-slate-100 shadow-sm cursor-pointer group" onclick="openModal('<?php echo htmlspecialchars($img['image_path']); ?>')">
+                            <img src="<?php echo htmlspecialchars($img['image_path']); ?>" alt="Essay photo" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         </div>
                     </div>
                 <?php endforeach; ?>
+            </div>
+
+            <div id="imageModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 cursor-pointer" onclick="closeModal()">
+                <div class="relative max-w-5xl max-h-[90vh] overflow-hidden rounded-2xl" onclick="event.stopPropagation()">
+                    <button onclick="closeModal()" class="absolute top-4 right-4 bg-slate-900/60 hover:bg-slate-900 text-white rounded-full p-2 transition cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <img id="modalImage" src="" alt="Full size preview" class="w-full max-h-[85vh] object-contain rounded-xl shadow-2xl">
+                </div>
             </div>
 
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-14 border-t border-slate-200/80 py-5">
@@ -281,5 +328,21 @@ $images_essay = $images_stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </div>
 </footer>
+
+<script>
+    function openModal(imageSrc) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modalImg.src = imageSrc;
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+</script>
 </body>
 </html>

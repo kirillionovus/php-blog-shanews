@@ -14,13 +14,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $password = $_POST['password'];
 
     if(!empty($username) && !empty($password)){
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
-        $stmt->execute([$username, $username]);
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->execute([$username]);
         $user = $stmt->fetch();
 
         if($user && password_verify($password, $user['password'])){
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
 
             if(isset($_POST['remember'])){
                 $token = bin2hex(random_bytes(32));
