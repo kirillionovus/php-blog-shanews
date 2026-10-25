@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
     </style>
 </head>
-<body class="min-h-screen overflow-hidden bg-slate-100 text-slate-950 selection:bg-blue-200">
+<body class="min-h-screen flex flex-col overflow-x-hidden bg-slate-100 text-slate-950 selection:bg-blue-200">
 <header class="relative z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-5 sm:px-8 lg:px-12">
     <div class="flex-1"></div>
     <div class="flex justify-center flex-1">
@@ -150,7 +150,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 
-<section class="relative flex min-h-[calc(92vh-4.5rem)] items-center justify-center px-5 py-12">
+<section class="flex-grow relative flex items-center justify-center px-5 py-12">
 
     <img src="assets/images/newspaper-bg.png" alt="Newspaper background" class="absolute inset-0 m-auto max-w-[980px] w-full pointer-events-none select-none z-0 object-contain" draggable="false">
 
@@ -208,6 +208,34 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <p class="mt-8 text-center text-sm font-medium text-slate-500">Don't have an account? <a href="register.php" class="font-bold text-slate-950 hover:underline">Sign Up</a></p>
     </div>
 </section>
+
+
+<footer class="bg-white border-t border-slate-200 text-slate-500 text-sm py-8 px-6 md:px-16">
+  <div class="max-w-[1800px] w-full mx-auto px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+    <div class="flex flex-col gap-6">
+      <div class="text-[1.43em] font-extrabold tracking-[-0.03em] text-slate-950 select-none">
+        $HANEWS
+      </div>
+      <div class="text-sm text-slate-400">
+        © 2026 $HANEWS. All rights reserved.
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start md:items-end gap-8">
+      <nav class="flex flex-wrap gap-x-8 gap-y-2 text-sm" style="font-family: 'Inter', sans-serif;">
+        <a href="#" class="hover:text-slate-800 transition-colors">About us</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Our journalists</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Contact</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Help</a>
+      </nav>
+
+      <nav class="flex flex-wrap gap-x-8 gap-y-2 text-slate-400 text-sm">
+        <a href="#" class="hover:text-slate-600 transition-colors">Privacy policy</a>
+        <a href="#" class="hover:text-slate-600 transition-colors">Terms of use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
 
 <script>
     const togglePasswordBtn = document.getElementById('togglePasswordBtn');

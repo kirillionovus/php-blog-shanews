@@ -33,7 +33,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     </style>
 </head>
-<body class="min-h-screen overflow-x-auto bg-slate-100 text-slate-950 selection:bg-blue-200">
+<body class="min-h-screen flex flex-col overflow-x-auto bg-slate-100 text-slate-950 selection:bg-blue-200">
 <header class="relative z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-12">
     <div class="flex-1"></div>
     <div class="flex justify-center flex-1">
@@ -196,7 +196,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </nav>
 
-<section class="max-w-[1800px] mx-auto px-12 pt-12 pb-8">
+<section class="w-full max-w-[1800px] mx-auto px-12 pt-12 pb-8">
     <div class="flex items-start justify-between gap-6">
         <div>
             <span class="text-sm font-bold uppercase tracking-[0.22em] text-blue-600">The Front Page</span>
@@ -215,7 +215,9 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </section>
 
-<main class="max-w-[1800px] mx-auto px-12 pb-16">
+
+
+<main class="flex-grow max-w-[1800px] w-full mx-auto px-12 pt-12 pb-16">
     <div class="flex items-center justify-between border-b border-slate-200 pb-4 mb-6">
         <div class="flex items-center gap-3">
             <div class="w-1 h-4 bg-blue-600 rounded-full"></div>
@@ -276,6 +278,36 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </main>
+
+
+
+<footer class="bg-white border-t border-slate-200 text-slate-500 text-sm py-8 px-6 md:px-16">
+  <div class="max-w-[1800px] w-full mx-auto px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+    <div class="flex flex-col gap-6">
+      <div class="text-[1.43em] font-extrabold tracking-[-0.03em] text-slate-950 select-none">
+        $HANEWS
+      </div>
+      <div class="text-sm text-slate-400">
+        © 2026 $HANEWS. All rights reserved.
+      </div>
+    </div>
+
+    <div class="flex flex-col items-start md:items-end gap-8">
+      <nav class="flex flex-wrap gap-x-8 gap-y-2 text-sm" style="font-family: 'Inter', sans-serif;">
+        <a href="#" class="hover:text-slate-800 transition-colors">About us</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Our journalists</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Contact</a>
+        <a href="#" class="hover:text-slate-800 transition-colors">Help</a>
+      </nav>
+
+      <nav class="flex flex-wrap gap-x-8 gap-y-2 text-slate-400 text-sm">
+        <a href="#" class="hover:text-slate-600 transition-colors">Privacy policy</a>
+        <a href="#" class="hover:text-slate-600 transition-colors">Terms of use</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
 
 <script>
     const searchToggleBtn = document.getElementById('searchToggleBtn');
