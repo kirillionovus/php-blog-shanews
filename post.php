@@ -1,3 +1,23 @@
+<?php 
+session_start();
+require_once('config/db.php');
+
+$post_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+
+$stmt = $pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.id = ?");
+$stmt->execute([$post_id]);
+
+$post = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(!$post){
+    header("Location: index.php");
+    exit;
+}
+
+$images_stmt = $pdo->prepare("SELECT * FROM post_images WHERE post_id = ?");
+$images_stmt->execute([$post_id]);
+$images_essay = $images_stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,7 +172,7 @@
             All stories
         </a>
         <div>
-            World &bull; October 22, 2026
+            <?php echo htmlspecialchars(ucfirst($post['category'])); ?> &bull; <?php echo date('F d, Y', strtotime($post['created_at'])); ?>
         </div>
     </div>
 </div>
@@ -162,26 +182,26 @@
 <main class="flex-1 bg-white">
     <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-8">
         <div class="flex items-center gap-2 mb-6">
-            <span class="text-sm font-bold uppercase tracking-wider text-blue-600 py-0.5">World</span>
+            <span class="text-sm font-bold uppercase tracking-wider text-blue-600 py-0.5"><?php echo htmlspecialchars($post['category']); ?></span>
         </div>
 
         <h1 class="text-6xl font-semibold text-slate-950 font-serif-editorial tracking-tight leading-[1.15] mb-6" style="font-family: 'Newsreader', serif;">
-            Europe’s night trains are making a comeback
+            <?php echo htmlspecialchars(ucfirst($post['title'])); ?>
         </h1>
 
         <p class="text-lg text-slate-500 font-normal leading-relaxed mb-10">
-            A new generation of sleeper routes is reconnecting the continent &mdash; and inviting travellers to slow down, look out of the window and arrive somewhere differently.
+            <?php echo htmlspecialchars($post['brief']); ?>
         </p>
 
         <div class="border-y border-slate-200 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3 text-sm">
                     <div class="w-8 h-8 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-xs">
-                        E
+                        <?php echo strtoupper(substr($post['username'], 0, 1)); ?>
                     </div>
-                    <span class="font-bold text-slate-900">Emma Clarke</span>
+                    <span class="font-bold text-slate-900"><?php echo htmlspecialchars($post['username']); ?></span>
                     <span class="text-slate-300">&bull;</span>
-                    <span class="text-slate-500">October 22, 2026</span>
+                    <span class="text-slate-500"><?php echo date('F d, Y, H:i', strtotime($post['created_at'])); ?></span>
                 </div>
             </div>
         </div>
@@ -189,74 +209,47 @@
 
     <figure class="max-w-[1170px] mx-auto px-6 mb-16">
         <div class="rounded-2xl overflow-hidden bg-slate-100 shadow-sm">
-            <img src="uploads/default_cover.jpg" alt="Cover image" class="w-full h-[600px] object-cover">
+            <img src="<?php echo htmlspecialchars($post['main_image']); ?>" alt="Main image" class="w-full h-[600px] object-cover">
         </div>
     </figure>
 
     <article class="max-w-[1050px] mx-auto px-6 space-y-8 text-slate-600 leading-relaxed">
         <div class="space-y-6">
-            <p class="text-3xl font-bold text-slate-950" style="font-family: 'Newsreader', serif;">At 22:13, a whistle cuts through the long blue hush of Paris Gare de l’Est. Behind the platform glass, a deep-blue carriage waits with its windows lit like a row of small rooms.</p>
-
-            <p class="text-xl font-normal">For years, the night train seemed like a charming relic: a complicated alternative to cheap flights, remembered more fondly than it was used. But across Europe, operators are again adding routes, refurbishing cabins and finding that passengers want a journey with a little more time in it.</p>
-
-            <p class="text-xl font-normal">For years, the night train seemed like a charming relic: a complicated alternative to cheap flights, remembered more fondly than it was used. But across Europe, operators are again adding routes, refurbishing cabins and finding that passengers want a journey with a little more time in it.</p>
-
-            <figure class="my-15 pl-6 border-l-3 border-blue-500">
-                <blockquote class="text-3xl font-bold text-slate-950 leading-snug" style="font-family: 'Newsreader', serif;">
-                    “You close your eyes in one capital and open them in another. That is still a powerful promise.”
-                </blockquote>
-            </figure>
-
-            <p class="text-xl font-normal">For years, the night train seemed like a charming relic: a complicated alternative to cheap flights, remembered more fondly than it was used. But across Europe, operators are again adding routes, refurbishing cabins and finding that passengers want a journey with a little more time in it.</p>
-
-            <p class="text-xl font-normal">For years, the night train seemed like a charming relic: a complicated alternative to cheap flights, remembered more fondly than it was used. But across Europe, operators are again adding routes, refurbishing cabins and finding that passengers want a journey with a little more time in it.</p>
+            <?php echo $post['content']; ?>
         </div>
     </article>
 
 
-    <section class="max-w-[1170px] mx-auto px-6 mt-26 mb-30">
+    <?php if (!empty($images_essay)): ?>
+        <section class="max-w-[1170px] mx-auto px-6 mt-26 mb-30">
             <div class="mb-6">
                 <span class="text-sm font-bold uppercase tracking-widest text-blue-600 py-0.5">Photo Essay</span>
                 <h2 class="text-2xl font-bold font-serif-editorial text-slate-950">Along the night line</h2>
             </div>
 
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="flex flex-col">
-                <div class="h-80 rounded-xl overflow-hidden bg-slate-100">
-                    <img src="uploads/default_cover.jpg" alt="" class="w-full h-full object-cover">
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <?php foreach ($essay_images as $img): ?>
+                    <div class="flex flex-col">
+                        <div class="h-80 rounded-xl overflow-hidden bg-slate-100 shadow-sm">
+                            <img src="<?php echo htmlspecialchars($img['image_path']); ?>" alt="Essay photo" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                <?php endforeach; ?>
             </div>
 
-            <div class="flex flex-col">
-                <div class="h-80 rounded-xl overflow-hidden bg-slate-100">
-                    <img src="uploads/default_cover.jpg" alt="" class="w-full h-full object-cover">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-14 border-t border-slate-200/80 py-5">
+                <div>
+                    <span class="block text-base text-slate-400 font-medium mb-4">Filed under:</span>
+                    <div class="flex items-center gap-2">
+                        <a href="index.php?category=<?php echo htmlspecialchars($post['category']); ?>" class="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded-md transition">
+                            <?php echo htmlspecialchars(ucfirst($post['category'])); ?>
+                        </a>
+                    </div>
                 </div>
             </div>
-
-            <div class="flex flex-col">
-                <div class="h-80 rounded-xl overflow-hidden bg-slate-100">
-                    <img src="uploads/default_cover.jpg" alt="" class="w-full h-full object-cover">
-                </div>
-            </div>
-
-            <div class="flex flex-col">
-                <div class="h-80 rounded-xl overflow-hidden bg-slate-100">
-                    <img src="uploads/default_cover.jpg" alt="" class="w-full h-full object-cover">
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-14 border-t border-slate-200/80 py-5">
-            <div>
-                <span class="block text-base text-slate-400 font-medium mb-4">Filed under:</span>
-                <div class="flex items-center gap-2">
-                    <a href="#" class="text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1 rounded-md transition">World</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    <?php else: echo "<div class='my-30'></div>";?>
+    <?php endif; ?>
 </main>
 
 
