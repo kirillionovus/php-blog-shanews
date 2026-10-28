@@ -119,7 +119,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
                 <div id="guestMenu" class="hidden fixed right-1 top-16 w-64 bg-white border border-slate-200/80 rounded-2xl shadow-xl shadow-slate-900/10 p-2 z-50">
                     <div class="flex items-center gap-3 px-3 py-4 mb-2 rounded-xl bg-slate-50">
-                        <div class="w-11 h-11 rounded-full bg-slate-200 text-white-700 flex items-center justify-center shrink-0">
+                        <div class="w-11 h-11 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center shrink-0">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>
@@ -149,10 +149,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     </div>
 </header>
 
-
-
 <section class="flex-grow relative flex items-center justify-center px-5 py-12">
-
     <img src="assets/images/newspaper-bg.png" alt="Newspaper background" class="absolute inset-0 m-auto max-w-[980px] w-full pointer-events-none select-none z-0 object-contain" draggable="false">
 
     <div class="relative z-10 w-full max-w-[406px] border border-slate-300 bg-white p-6 shadow-[0_12px_35px_rgba(15,23,42,0.06)] sm:p-9">
@@ -209,7 +206,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <p class="mt-8 text-center text-sm font-medium text-slate-500">Don't have an account? <a href="register.php" class="font-bold text-slate-950 hover:underline">Sign Up</a></p>
     </div>
 </section>
-
 
 <footer class="bg-white border-t border-slate-200 text-slate-500 text-sm py-8 px-6 md:px-16">
   <div class="max-w-[1800px] w-full mx-auto px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">

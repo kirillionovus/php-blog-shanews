@@ -250,7 +250,15 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="space-y-6">
         <?php if (!empty($posts)): ?>
             <?php foreach ($posts as $post): ?>
-                <article class="bg-white border border-slate-200/80 p-6 shadow-2xs hover:border-slate-300 transition flex flex-row gap-6">
+                <article class="relative bg-white border border-slate-200/80 p-6 shadow-2xs hover:border-slate-300 transition flex flex-row gap-6">
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                        <a href="admin_edit.php?id=<?php echo $post['id']; ?>" class="absolute top-4 right-4 z-20 p-2.5 rounded-xl border border-slate-200 shadow-sm transition cursor-pointer" title="Edit Post">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
+
                     <a href="post.php?id=<?php echo $post['id']; ?>" class="w-90 h-60 shrink-0 rounded-xs overflow-hidden bg-slate-100 block group">
                         <img src="<?php echo htmlspecialchars($post['main_image']); ?>" alt="Post image" class="w-full h-full object-cover">
                     </a>
