@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('config/db.php');
 
 if (isset($_SESSION['user_id'])) {
@@ -14,24 +15,28 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $password = $_POST['password'];
 
     if(!empty($username) && !empty($email) && !empty($password)){
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+        if (strlen($password) < 6) {
+            $message = 'Password must be at least 6 characters long!';
+        } else {
+            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->execute([$email]);
 
-        if($stmt->fetch()){
-            $message = 'This email is already taken!';
-        }else{
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
-            $stmt->execute([$username]);
             if($stmt->fetch()){
-                $message = 'This username is already taken!';
+                $message = 'This email is already taken!';
             }else{
-                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-                $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-                if($stmt->execute([$username, $email, $hashedPassword])){
-                    $message = 'Registration was successful! You can now log in.';
+                $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+                $stmt->execute([$username]);
+                if($stmt->fetch()){
+                    $message = 'This username is already taken!';
                 }else{
-                    $message = 'Error during registration.';
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+                    if($stmt->execute([$username, $email, $hashedPassword])){
+                        $message = 'Registration was successful! You can now log in.';
+                    }else{
+                        $message = 'Error during registration.';
+                    }
                 }
             }
         }

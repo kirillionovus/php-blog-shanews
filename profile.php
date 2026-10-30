@@ -44,7 +44,7 @@ $formatted_date = date('d F Y', strtotime($user['created_at'] ?? 'now'));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$haNews</title>
+    <title>$haNews | Profile</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="assets/js/main.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,68 +175,68 @@ $formatted_date = date('d F Y', strtotime($user['created_at'] ?? 'now'));
     </div>
 </div>
 
+
 <main class="flex-1 bg-white">
-    <div class="max-w-[1450px] mx-auto px-6 pt-16 pb-8">
-        <div class="mb-13">
-            <span class="text-sm font-bold uppercase tracking-[0.12em] text-blue-600">Account</span>
-            <h1 class="text-6xl tracking-[-0.03em] font-bold text-slate-950 mt-4" style="font-family: 'Newsreader', serif;">User profile</h1>
-            <p class="text-slate-500 text-xl mt-1 tracking-[-0.02em]">Manage your personal details and account security on $HANEWS.</p>
+    <div class="max-w-[1400px] mx-auto px-8 pt-14 pb-12">
+        <div class="mb-12">
+            <span class="text-sm font-bold uppercase tracking-[0.14em] text-blue-600">Account</span>
+            <h1 class="text-5xl tracking-[-0.03em] font-bold text-slate-950 mt-2.5" style="font-family: 'Newsreader', serif;">User profile</h1>
+            <p class="text-slate-500 text-lg mt-1.5 tracking-[-0.01em]">Manage your personal details and account security on $HANEWS.</p>
         </div>
 
-        <div class="grid grid-cols-3 gap-8">
-            <div class="col-span-2 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-8">
-                <div class="flex items-center justify-between pb-6 border-b border-slate-200">
-                    <div class="flex items-center gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="md:col-span-2 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm space-y-8">
+                <div class="flex items-center pb-6 border-b border-slate-200">
+                    <div class="flex items-center gap-5">
                         <div class="w-18 h-18 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-2xl shadow-md select-none">
                             <?php echo strtoupper(substr($user['username'], 0, 1)); ?>
                         </div>
                         <div>
-                            <h2 class="text-2xl font-bold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo htmlspecialchars($user['username']); ?></h2>
-                            <p class="text-base text-slate-500 font-medium">
+                            <h2 class="text-3xl font-bold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo htmlspecialchars($user['username']); ?></h2>
+                            <p class="text-base text-slate-500 font-medium mt-0.5">
                                 <?php echo ($user['role'] === 'admin') ? 'Administrator SHANEWS' : 'Reader SHANEWS'; ?>
                             </p>
                         </div>
                     </div>
-                    <a href="profile_edit.php" class="px-4 py-2 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 text-sm font-semibold rounded-xl transition cursor-pointer">Edit profile</a>
                 </div>
 
                 <div class="space-y-6">
-                    <h3 class="text-base font-bold uppercase tracking-wider text-slate-900" style="font-family: 'Newsreader', serif;" >Personal information</h3>
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-900">Personal information</h3>
                     
-                    <div class="flex justify-between items-center py-3 border-b border-slate-100 text-base">
+                    <div class="flex justify-between items-center py-4 border-b border-slate-100 text-base">
                         <span class="text-slate-500">Username</span>
-                        <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($user['username']); ?></span>
+                        <span class="font-semibold text-slate-900 text-lg"><?php echo htmlspecialchars($user['username']); ?></span>
                     </div>
 
-                    <div class="flex justify-between items-center py-3 border-b border-slate-100 text-base">
+                    <div class="flex justify-between items-center py-4 border-b border-slate-100 text-base">
                         <span class="text-slate-500">Email address</span>
-                        <span class="font-semibold text-slate-800"><?php echo htmlspecialchars($user['email']); ?></span>
+                        <span class="font-semibold text-slate-900 text-lg"><?php echo htmlspecialchars($user['email']); ?></span>
                     </div>
 
-                    <div class="flex justify-between items-center py-3 text-base">
+                    <div class="flex justify-between items-center py-4 text-base">
                         <span class="text-slate-500">Member since</span>
-                        <span class="font-semibold text-slate-800"><?php echo $formatted_date; ?></span>
+                        <span class="font-semibold text-slate-900 text-lg"><?php echo $formatted_date; ?></span>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-8">
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-                    <span class="text-sm font-bold uppercase tracking-[0.12em] text-blue-600">Activity</span>
-                    <h3 class="text-3xl font-bold text-slate-900 mt-1" style="font-family: 'Newsreader', serif;">Your stats</h3>
+                <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm space-y-5">
+                    <span class="text-sm font-bold uppercase tracking-[0.14em] text-blue-600">Activity</span>
+                    <h3 class="text-3xl font-bold text-slate-900" style="font-family: 'Newsreader', serif;">Your stats</h3>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-slate-50 border border-slate-100 rounded-xl p-4">
-                            <span class="text-4xl font-semibold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo $comments_count; ?></span>
-                            <p class="text-base text-slate-500 leading-[0.7em]">comments</p>
+                            <span class="text-4xl font-bold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo $comments_count; ?></span>
+                            <p class="text-sm text-slate-500 mt-1 font-medium">comments</p>
                         </div>
                         <div class="bg-slate-50 border border-slate-100 rounded-xl p-4">
-                            <span class="text-4xl font-semibold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo $posts_count; ?></span>
-                            <p class="text-base text-slate-500 leading-[0.7em]">posts</p>
+                            <span class="text-4xl font-bold text-slate-900" style="font-family: 'Newsreader', serif;"><?php echo $posts_count; ?></span>
+                            <p class="text-sm text-slate-500 mt-1 font-medium">posts</p>
                         </div>
                     </div>
 
-                    <a href="my_comments.php" class="w-full py-2.5 px-4 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 text-base font-semibold rounded-xl transition cursor-pointer flex items-center justify-center gap-2">
+                    <a href="my_comments.php" class="w-full py-3 px-4 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 text-base font-semibold rounded-xl transition cursor-pointer flex items-center justify-center gap-2">
                         <svg class="size-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.189.93 4.178 2.457 5.578.334.325.557.77.467 1.226-.19 1.002-.756 2.115-1.096 2.384a.75.75 0 0 0 .827 1.218c1.32-.569 2.707-1.571 3.277-2.008C10.052 19.982 10.99 20.25 12 20.25Z" />
                         </svg>
@@ -244,23 +244,23 @@ $formatted_date = date('d F Y', strtotime($user['created_at'] ?? 'now'));
                     </a>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex items-center gap-3">
+                <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm space-y-5">
+                    <div class="flex items-center gap-3.5">
                         <div class="p-2.5 bg-blue-50 text-blue-700 rounded-xl">
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                             </svg>
                         </div>
                         <div>
-                            <h4 class="text-xl font-bold text-slate-900">Security</h4>
+                            <h4 class="text-base font-bold text-slate-900">Security</h4>
                             <p class="text-sm text-slate-500">Password and access</p>
                         </div>
                     </div>
                     
-                    <p class="text-slate-500 text-lg mt-1 tracking-[-0.02em] font-medium">Update your password regularly to help keep your account secure.</p>
+                    <p class="text-slate-500 text-base leading-relaxed">Update your password regularly to help keep your account secure.</p>
 
-                    <a href="profile_password.php" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center gap-2">
-                        <svg class="size-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <a href="profile_password.php" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white text-base font-semibold rounded-xl transition shadow-sm cursor-pointer flex items-center justify-center gap-2">
+                        <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M8.149 17.5467L6.778 18.9217L5 17.1387L11.388 10.7387C10.5317 8.96445 11.0948 6.83093 12.715 5.71029C14.3353 4.58965 16.5303 4.8156 17.8882 6.24281C19.2462 7.67002 19.3628 9.8735 18.1631 11.4361C16.9633 12.9987 14.8045 13.455 13.075 12.5117L9.563 16.0337L11.03 17.5057L9.569 18.9707L8.149 17.5467Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M16.128 7.85071C16.7515 8.47602 16.7506 9.48824 16.1258 10.1124C15.5011 10.7365 14.4889 10.7365 13.8642 10.1124C13.2395 9.48824 13.2385 8.47602 13.862 7.85071C14.4893 7.22864 15.5008 7.22864 16.128 7.85071Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
@@ -271,6 +271,7 @@ $formatted_date = date('d F Y', strtotime($user['created_at'] ?? 'now'));
         </div>
     </div>
 </main>
+
 
 <footer class="bg-white border-t border-slate-200 text-slate-500 text-sm py-8 px-6 md:px-16">
   <div class="max-w-[1800px] w-full mx-auto px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">

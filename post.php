@@ -23,7 +23,7 @@ $images_essay = $images_stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>$haNews</title>
+    <title><?php echo $post['title']?> | $haNews</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="assets/js/main.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
