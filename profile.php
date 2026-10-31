@@ -235,13 +235,6 @@ $formatted_date = date('d F Y', strtotime($user['created_at'] ?? 'now'));
                             <p class="text-sm text-slate-500 mt-1 font-medium">posts</p>
                         </div>
                     </div>
-
-                    <a href="my_comments.php" class="w-full py-3 px-4 border border-slate-200 hover:border-slate-300 hover:bg-slate-50 text-slate-800 text-base font-semibold rounded-xl transition cursor-pointer flex items-center justify-center gap-2">
-                        <svg class="size-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.189.93 4.178 2.457 5.578.334.325.557.77.467 1.226-.19 1.002-.756 2.115-1.096 2.384a.75.75 0 0 0 .827 1.218c1.32-.569 2.707-1.571 3.277-2.008C10.052 19.982 10.99 20.25 12 20.25Z" />
-                        </svg>
-                        My comments
-                    </a>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-7 shadow-sm space-y-5">
