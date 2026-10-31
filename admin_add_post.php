@@ -222,43 +222,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
-    const searchToggleBtn = document.getElementById('searchToggleBtn');
-    const searchBar = document.getElementById('searchBar');
-    const searchInput = document.getElementById('searchInput');
-    const closeSearchBtn = document.getElementById('closeSearchBtn');
-
-    function toggleSearch(){
-        const isHidden = searchBar.classList.contains('hidden');
-        if (isHidden){
-            searchBar.classList.remove('hidden');
-            searchInput.focus();
-        }else{
-            searchBar.classList.add('hidden');
-        }
-    }
-
-    searchToggleBtn.addEventListener('click', (e)=>{
-        e.stopPropagation();
-        toggleSearch();
-    });
-    closeSearchBtn.addEventListener('click', ()=>{
-        searchBar.classList.add('hidden');
-    });
-
-    document.addEventListener('keydown', (e)=>{
-        if (e.key === 'Escape' && !searchBar.classList.contains('hidden')){
-            searchBar.classList.add('hidden');
-        }
-    });
-
-    document.addEventListener('click', (e)=>{
-        if (!searchBar.contains(e.target) && !searchToggleBtn.contains(e.target)){
-            searchBar.classList.add('hidden');
-        }
-    });
-
-
-
     const quill = new Quill('#editor', {
         theme: 'snow',
         placeholder: 'Write your story here...',
