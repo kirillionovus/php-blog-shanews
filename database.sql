@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 25 2026 г., 19:14
+-- Время создания: Окт 31 2026 г., 23:07
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -34,6 +34,14 @@ CREATE TABLE `comments` (
   `content` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `comments`
+--
+
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
+(1, 2, 2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '2026-10-30 14:13:48'),
+(2, 2, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '2026-10-30 14:22:09');
 
 -- --------------------------------------------------------
 
@@ -78,9 +86,9 @@ CREATE TABLE `post_images` (
 
 INSERT INTO `post_images` (`id`, `post_id`, `image_path`) VALUES
 (1, 2, 'uploads/1792951166_0_FraizierVsAli4.jpg'),
-(2, 2, 'uploads/1792951166_1_FraizierVsAli3.jpg'),
 (3, 2, 'uploads/1792951166_2_FraizierVsAli2.jpg'),
-(4, 2, 'uploads/1792951166_3_FraizierVsAli1.jpg');
+(4, 2, 'uploads/1792951166_3_FraizierVsAli1.jpg'),
+(8, 2, 'uploads/1793205799_0_FraizierVsAli3.jpg');
 
 -- --------------------------------------------------------
 
@@ -94,6 +102,14 @@ CREATE TABLE `reactions` (
   `user_id` int(11) NOT NULL,
   `type` enum('like','dislike') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `reactions`
+--
+
+INSERT INTO `reactions` (`id`, `post_id`, `user_id`, `type`) VALUES
+(6, 2, 1, 'dislike'),
+(7, 2, 2, 'like');
 
 -- --------------------------------------------------------
 
@@ -169,7 +185,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `posts`
@@ -181,13 +197,13 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT для таблицы `post_images`
 --
 ALTER TABLE `post_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `reactions`
 --
 ALTER TABLE `reactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
