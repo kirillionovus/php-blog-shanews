@@ -3,18 +3,20 @@ session_start();
 require_once('config/db.php');
 
 $current_category = isset($_GET['category']) ? $_GET['category'] : 'home';
+$sort = isset($_GET['sort']) && $_GET['sort'] === 'oldest' ? 'ASC' : 'DESC';
 
-$sort = isset($_GET['sort']) && $_GET === 'oldest' ? 'ASC' : 'DESC';
+require_once('search_handler.php');
 
-if($current_category === 'home'){
-    $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY created_at $sort");
-    $stmt->execute([]);
-}else{
-    $stmt = $pdo->prepare("SELECT * FROM posts WHERE category = ? ORDER BY created_at $sort");
-    $stmt->execute([$current_category]);
+if (empty($search)) {
+    if($current_category === 'home'){
+        $stmt = $pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id ORDER BY posts.created_at $sort");
+        $stmt->execute([]);
+    }else{
+        $stmt = $pdo->prepare("SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.id WHERE posts.category = ? ORDER BY posts.created_at $sort");
+        $stmt->execute([$current_category]);
+    }
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +48,10 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="relative flex items-center">
             <div id="searchBar" class="hidden absolute right-12 bg-white border border-slate-200 rounded-xl px-3 py-1.5 w-90 z-30">
                 <form action="index.php" method="GET" class="flex items-center gap-2">
+                    <?php if (isset($current_category) && $current_category !== 'home'): ?>
+                        <input type="hidden" name="category" value="<?php echo htmlspecialchars($current_category); ?>">
+                    <?php endif; ?>
+                    
                     <input id="searchInput" type="text" name="search" placeholder="Search news..." class="w-full bg-transparent text-slate-800 text-sm focus:outline-none py-0.5" autocomplete="off">
                     <button id="closeSearchBtn" type="button" class="text-slate-400 hover:text-slate-950 text-xs uppercase font-medium px-1.5 py-0.5 rounded hover:bg-slate-100 transition">ESC</button>
                 </form>
@@ -225,17 +231,24 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="flex items-center gap-4">
-            <div class="relative">
-                <select name="sort" class="appearance-none bg-transparent text-xs font-medium text-slate-500 hover:text-slate-950 focus:outline-none pr-5 py-1 cursor-pointer transition">
-                    <option value="newest" selected>Newest first</option>
-                    <option value="oldest">Oldest first</option>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center text-slate-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                    </svg>
+            <form method="GET" action="index.php" class="relative inline-flex items-center">
+                <?php if ($current_category !== 'home'): ?>
+                    <input type="hidden" name="category" value="<?php echo htmlspecialchars($current_category); ?>">
+                <?php endif; ?>
+
+                <div class="relative flex items-center">
+                    <select name="sort" onchange="this.form.submit()" class="appearance-none bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 hover:text-slate-950 rounded-xl pl-3 pr-8 py-2 cursor-pointer transition focus:outline-none focus:border-slate-400">
+                        <option value="newest" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'oldest') ? '' : 'selected'; ?>>Newest first</option>
+                        <option value="oldest" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'oldest') ? 'selected' : ''; ?>>Oldest first</option>
+                    </select>
+                    
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                 <a href="admin_add_post.php" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition inline-flex items-center justify-center cursor-pointer shadow-sm gap-2 font-semibold" title="Create New Post">
