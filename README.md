@@ -121,4 +121,3 @@ For testing administrative and user features immediately, you can use the pre-co
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
 
----
